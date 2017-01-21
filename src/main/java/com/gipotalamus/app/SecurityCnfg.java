@@ -1,5 +1,6 @@
 package com.gipotalamus.app;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,6 +10,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 /**
  * Created by gipotalamus on 17.01.17.
  */
+@Configuration
 public class SecurityCnfg extends WebSecurityConfigurerAdapter {
 
     @Override
@@ -18,7 +20,7 @@ public class SecurityCnfg extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/jokes/*", "/groups/*", "/").permitAll()
+                .antMatchers("/**", "/").permitAll()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
