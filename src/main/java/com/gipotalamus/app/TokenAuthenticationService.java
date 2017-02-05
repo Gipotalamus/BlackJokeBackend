@@ -17,7 +17,7 @@ public class TokenAuthenticationService {
     private String secret = "ThisIsASecret";
     private String tokenPrefix = "Bearer";
     private String headerString = "Authorization";
-    public void addAuthentication(HttpServletResponse response, String username) {
+    public void addAuthentication(HttpServletResponse response, String username, String role) {
         // We generate a token now.
         String JWT = Jwts.builder()
                 .setSubject(username)
@@ -25,6 +25,8 @@ public class TokenAuthenticationService {
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
         response.addHeader(headerString, tokenPrefix + " " + JWT);
+        response.addHeader("User", username);
+        response.addHeader("Roles", role);
     }
 
     public Authentication getAuthentication(HttpServletRequest request) {
