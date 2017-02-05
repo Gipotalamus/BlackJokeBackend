@@ -21,6 +21,10 @@ public class JokeUser {
     @JsonIgnore
     private List<Joke> jokes;
 
+    @OneToMany(mappedBy = "jokeUser")
+    @JsonIgnore
+    private List<Vote> votes;
+
     public JokeUser() {
     }
 
@@ -50,5 +54,13 @@ public class JokeUser {
 
     public void setJokes(List<Joke> jokes) {
         this.jokes = jokes;
+    }
+
+    public List<Vote> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(List<Vote> votes) {
+        this.votes = votes;
     }
 }

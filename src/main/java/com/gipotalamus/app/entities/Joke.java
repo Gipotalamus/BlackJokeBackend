@@ -1,7 +1,10 @@
 package com.gipotalamus.app.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by gipotalamus on 28.11.16.
@@ -28,12 +31,14 @@ public class Joke {
     @JoinColumn(name = "author")
     private JokeUser author;
 
-    private Long votes;
+    @OneToMany(mappedBy = "joke")
+    @JsonIgnore
+    private List<Vote> votes;
 
     public Joke() {
     }
 
-    public Joke(String content, JokeGroup group, Date date, JokeUser author, Long votes) {
+    public Joke(String content, JokeGroup group, Date date, JokeUser author, List<Vote> votes) {
         this.content = content;
         this.jokeGroup = group;
         this.date = date;
@@ -81,11 +86,11 @@ public class Joke {
         this.author = author;
     }
 
-    public Long getVotes() {
+    public List<Vote> getVotes() {
         return votes;
     }
 
-    public void setVotes(Long votes) {
+    public void setVotes(List<Vote> votes) {
         this.votes = votes;
     }
 }

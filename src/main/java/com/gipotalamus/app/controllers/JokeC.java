@@ -20,7 +20,7 @@ public class JokeC {
     @Inject
     private JokeS jokeS;
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public Page<Joke> getAll(@RequestParam(value = "filter", required = false, defaultValue = "") String filter, Pageable pageable) {
         return jokeS.getAll(filter, pageable);
     }
