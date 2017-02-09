@@ -35,6 +35,8 @@ public class Joke {
     @JsonIgnore
     private List<Vote> votes;
 
+    private Double raiting;
+
     public Joke() {
     }
 
@@ -62,11 +64,11 @@ public class Joke {
         this.content = content;
     }
 
-    public JokeGroup getGroup() {
+    public JokeGroup getJokeGroup() {
         return jokeGroup;
     }
 
-    public void setGroup(JokeGroup jokeGroup) {
+    public void setJokeGroup(JokeGroup jokeGroup) {
         this.jokeGroup = jokeGroup;
     }
 
@@ -93,4 +95,13 @@ public class Joke {
     public void setVotes(List<Vote> votes) {
         this.votes = votes;
     }
+
+    public Double getRaiting() {
+        return raiting;
+    }
+
+    public void setRaiting(Double raiting) {
+        this.raiting = raiting;
+    }
+
 }

@@ -15,7 +15,16 @@ public class VoteS {
     @Inject
     private VoteR voteR;
 
-    public List<Vote> getVotes() {
+    @Inject
+    private JokeS jokeS;
+
+    public List<Vote> getAll() {
         return voteR.findAll();
+    }
+
+    public Vote add(Vote vote) {
+        Vote v = voteR.save(vote);
+        jokeS.calculateRaiting(vote.getJoke());
+        return v;
     }
 }

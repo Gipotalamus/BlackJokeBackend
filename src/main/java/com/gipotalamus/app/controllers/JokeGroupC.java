@@ -18,7 +18,7 @@ public class JokeGroupC {
     @Inject
     private JokeGroupS groupS;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public List<JokeGroup> getAll() {
         return groupS.getAll();
     }

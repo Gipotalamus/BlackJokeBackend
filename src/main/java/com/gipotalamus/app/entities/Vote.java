@@ -20,7 +20,7 @@ public class Vote {
     @JoinColumn(name = "joke")
     private Joke joke;
 
-    private double votesValue;
+    private double voteValue;
 
     public Vote() {
     }
@@ -49,11 +49,11 @@ public class Vote {
         this.joke = joke;
     }
 
-    public double getVotesValue() {
-        return votesValue;
+    public double getVoteValue() {
+        return voteValue;
     }
 
-    public void setVotesValue(double votesValue) {
-        this.votesValue = votesValue;
+    public void setVoteValue(double voteValue) {
+        this.voteValue = voteValue;
     }
 }

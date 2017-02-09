@@ -2,9 +2,7 @@ package com.gipotalamus.app.controllers;
 
 import com.gipotalamus.app.entities.Vote;
 import com.gipotalamus.app.services.VoteS;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -20,8 +18,13 @@ public class VoteC {
     @Inject
     private VoteS voteS;
 
-    @RequestMapping("/")
-    public List<Vote> getVotes() {
-        return voteS.getVotes();
+    @RequestMapping("")
+    public List<Vote> getAll() {
+        return voteS.getAll();
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+    public Vote add(@RequestBody Vote vote) {
+        return voteS.add(vote);
     }
 }

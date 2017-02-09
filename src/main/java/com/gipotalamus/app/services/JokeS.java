@@ -2,6 +2,7 @@ package com.gipotalamus.app.services;
 
 import com.gipotalamus.app.entities.Joke;
 import com.gipotalamus.app.entities.JokeGroup;
+import com.gipotalamus.app.entities.Vote;
 import com.gipotalamus.app.repos.JokeR;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,7 +26,7 @@ public class JokeS {
     private JokeUserS jokeUserS;
 
     public Joke addOrUpdate(Joke joke) {
-        joke.setGroup(jokeGroupS.getByName(joke.getGroup().getName()));
+        joke.setJokeGroup(jokeGroupS.getByName(joke.getJokeGroup().getName()));
         joke.setAuthor(jokeUserS.getByName(joke.getAuthor().getName()));
         return jokeRepo.save(joke);
     }
@@ -43,6 +44,19 @@ public class JokeS {
 
     public Joke get(Long id) {
         return jokeRepo.findOne(id);
+    }
+
+    public Double calculateRaiting(Joke joke) {
+        Double sum = 0d;
+        for (Vote vote :
+                joke.getVotes()) {
+            sum += vote.getVoteValue();
+        }
+        Integer count = joke.getVotes().size();
+        Double r = sum/count;
+        joke.setRaiting(r);
+        addOrUpdate(joke);
+        return r;
     }
 
 }
