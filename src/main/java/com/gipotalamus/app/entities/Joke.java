@@ -1,6 +1,8 @@
 package com.gipotalamus.app.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -31,7 +33,7 @@ public class Joke {
     @JoinColumn(name = "author")
     private JokeUser author;
 
-    @OneToMany(mappedBy = "joke")
+    @OneToMany(mappedBy = "joke", orphanRemoval = true)
     @JsonIgnore
     private List<Vote> votes;
 

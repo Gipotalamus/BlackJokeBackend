@@ -1,5 +1,6 @@
 package com.gipotalamus.app.services;
 
+import com.gipotalamus.app.entities.JokeUser;
 import com.gipotalamus.app.entities.Vote;
 import com.gipotalamus.app.repos.VoteR;
 import org.springframework.stereotype.Service;
@@ -16,15 +17,23 @@ public class VoteS {
     private VoteR voteR;
 
     @Inject
+    JokeUserS userS;
+
+    @Inject
     private JokeS jokeS;
 
     public List<Vote> getAll() {
         return voteR.findAll();
     }
 
+    public List<Vote> getByUser(JokeUser user) {
+        return voteR.findByJokeUser(user);
+    }
+
     public Vote add(Vote vote) {
+        vote.setJokeUser(userS.getByName(vote.getJokeUser().getName()));
         Vote v = voteR.save(vote);
-        jokeS.calculateRaiting(vote.getJoke());
+        jokeS.calculateRaiting(vote.getJoke(), vote.getVoteValue());
         return v;
     }
 }

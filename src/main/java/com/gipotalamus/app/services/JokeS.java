@@ -38,7 +38,7 @@ public class JokeS {
     public Page<Joke> getAll(String filter, Pageable pageable) {
         if (filter.equals("")) {
             return jokeRepo.findAll(pageable);
-            }
+        }
         return jokeRepo.findByJokeGroup(jokeGroupS.getByName(filter), pageable);
     }
 
@@ -46,16 +46,17 @@ public class JokeS {
         return jokeRepo.findOne(id);
     }
 
-    public Double calculateRaiting(Joke joke) {
-        Double sum = 0d;
+    public Double calculateRaiting(Joke joke, Double voteVal) {
+        Double sum = voteVal;
+        Joke oldJoke = get(joke.getId());
         for (Vote vote :
-                joke.getVotes()) {
+                oldJoke.getVotes()) {
             sum += vote.getVoteValue();
         }
-        Integer count = joke.getVotes().size();
-        Double r = sum/count;
-        joke.setRaiting(r);
-        addOrUpdate(joke);
+        Integer count = oldJoke.getVotes().size() + 1;
+        Double r = sum / count;
+        oldJoke.setRaiting(r);
+        addOrUpdate(oldJoke);
         return r;
     }
 

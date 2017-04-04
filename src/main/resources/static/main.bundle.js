@@ -9692,15 +9692,15 @@ var JokesGroupsService = (function () {
         this.http = http;
     }
     JokesGroupsService.prototype.getJokesGroups = function () {
-        return this.http.get('/groups/').map(function (resp) { return resp.json(); });
+        return this.http.get('http://localhost:8080/groups/').map(function (resp) { return resp.json(); });
     };
     JokesGroupsService.prototype.saveJokesGroup = function (jokesGroup) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Content-Type': 'application/json' });
         var ro = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* RequestOptions */]({ headers: headers });
-        return this.http.post('/groups/', JSON.stringify(jokesGroup), ro);
+        return this.http.post('http://localhost:8080/groups/', JSON.stringify(jokesGroup), ro);
     };
     JokesGroupsService.prototype.deleteJokesGroup = function (jokesGroupId) {
-        return this.http.delete('/groups/' + jokesGroupId);
+        return this.http.delete('http://localhost:8080/groups/' + jokesGroupId);
     };
     JokesGroupsService = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["d" /* Injectable */])(), 
@@ -31235,7 +31235,7 @@ var JokeService = (function () {
     }
     JokeService.prototype.getJokes = function (group, page, pageSize, sort) {
         var _this = this;
-        return this.http.get('/jokes?filter=' + group + '&page=' + (page - 1) + '&size=' + pageSize + '&sort=' + sort)
+        return this.http.get('http://localhost:8080/jokes?filter=' + group + '&page=' + (page - 1) + '&size=' + pageSize + '&sort=' + sort)
             .map(function (resp) {
             var json = resp.json();
             _this.paginationService.collectionSize = json['totalElements'];
@@ -31245,10 +31245,10 @@ var JokeService = (function () {
     JokeService.prototype.saveJoke = function (joke) {
         var headers = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Headers */]({ 'Content-Type': 'application/json' });
         var ro = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["b" /* RequestOptions */]({ headers: headers });
-        return this.http.post('/jokes/', JSON.stringify(joke), ro);
+        return this.http.post('http://localhost:8080/jokes/', JSON.stringify(joke), ro);
     };
     JokeService.prototype.deleteJoke = function (jokeId) {
-        return this.http.delete('/jokes/' + jokeId);
+        return this.http.delete('http://localhost:8080/jokes/' + jokeId);
     };
     JokeService = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__angular_core__["d" /* Injectable */])(), 
@@ -31290,7 +31290,7 @@ var UserService = (function () {
     }
     UserService.prototype.login = function (name, password) {
         var _this = this;
-        this.http.post('/login', JSON.stringify({
+        this.http.post('http://localhost:8080/login', JSON.stringify({
             username: name,
             password: password
         })).subscribe(function (resp) {

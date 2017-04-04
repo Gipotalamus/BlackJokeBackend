@@ -28,9 +28,25 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
     }
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException, IOException, ServletException {
-        AccountCredentials credentials = new ObjectMapper().readValue(httpServletRequest.getInputStream(), AccountCredentials.class);
+        if (request.getHeader("Origin") != null) {
+            String origin = request.getHeader("Origin");
+            response.addHeader("Access-Control-Allow-Origin", origin);
+            response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+            response.addHeader("Access-Control-Allow-Credentials", "true");
+            response.addHeader("Access-control-expose-headers" , "Authorization");
+            response.addHeader("Access-control-expose-headers" , "User");
+            response.addHeader("Access-control-expose-headers" , "Roles");
+            response.addHeader("Access-Control-Allow-Headers",
+                    request.getHeader("Access-Control-Request-Headers"));
+        }
+        if (request.getMethod().equals("OPTIONS")) {
+            response.getWriter().print("OK");
+            response.getWriter().flush();
+
+        }
+        AccountCredentials credentials = new ObjectMapper().readValue(request.getInputStream(), AccountCredentials.class);
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(credentials.getUsername(), credentials.getPassword());
         return getAuthenticationManager().authenticate(token);
     }
